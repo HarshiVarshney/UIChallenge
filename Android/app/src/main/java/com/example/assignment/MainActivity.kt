@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import android.widget.Switch
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 
 class MainActivity : AppCompatActivity() {
     private var isVerified = false
@@ -21,6 +25,27 @@ class MainActivity : AppCompatActivity() {
         val etAge = findViewById<EditText>(R.id.etAge)
         val btnVerify = findViewById<Button>(R.id.btnVerify)
         val tvStatus = findViewById<TextView>(R.id.tvStatus)
+
+
+        val themeSwitch = findViewById<Switch>(R.id.theme_switch)
+
+
+        themeSwitch.isChecked = when (AppCompatDelegate.getDefaultNightMode()) {
+            MODE_NIGHT_YES -> true
+            else -> false
+        }
+
+        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+            } else {
+
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+            }
+
+            recreate()
+        }
 
         fun resetVerification() {
             isVerified = false
